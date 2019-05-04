@@ -7,5 +7,22 @@ Swagger url
 
 ## Rest endpoints:
 
+GET `/tickets` - returns all tickets  
+message: {type: string, city: string, seller: string} - returns filtered tickets  
+POST `/tickets` - create new ticket (requires permissions)  
+message: Ticket object
+    
+GET `/tickets/{id}` - returns ticket with specified id  
+POST `/tickets/{id}` - creates a new ticket_code and pair with a ticket with specified id  
+PUT `/tickets/{id}` - updates a ticket with specified id 
+DELETE `/tickets/{id}` - removes a ticket with specified id  
+
+GET `/tickets/{id}/buy` - returns a ticket_private_key from ticket with specified id, marks ticket as waiting for payment
+
+GET `tickets/buy` returns ticket_key when payment has been transferred successfully, updates sold value to true
+message: {ticket_private_key: string}
+
+GET `/pay` - pays for ticket
+message: {ticket_private_key: string}
 
 ## Database:
