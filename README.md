@@ -26,3 +26,9 @@ GET `/pay` - pays for ticket
 message: {ticket_private_key: string}
 
 ## Database:
+
+
+## Design patterns examples:
+1. Builder - `pl.xkoem.tickets.models.Ticket.Builder`
+2. Static factory method `pl.xkoem.tickets.models.City.valueOf()`
+3. Factory - `pl.xkoem.tickets.utils.randomtextgenerator.RandomTextGeneratorFactory`

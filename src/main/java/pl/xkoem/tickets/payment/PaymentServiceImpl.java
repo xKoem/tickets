@@ -2,7 +2,7 @@ package pl.xkoem.tickets.payment;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import pl.xkoem.tickets.models.TicketPrivateKey;
+import pl.xkoem.tickets.payment.models.TicketPrivateKey;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {

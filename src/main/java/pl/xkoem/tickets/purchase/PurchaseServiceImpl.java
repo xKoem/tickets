@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.xkoem.tickets.models.TicketCode;
-import pl.xkoem.tickets.models.TicketPrivateKey;
+import pl.xkoem.tickets.payment.models.TicketPrivateKey;
 
 @Service
 public class PurchaseServiceImpl implements PurchaseService {

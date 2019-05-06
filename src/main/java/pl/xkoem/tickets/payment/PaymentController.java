@@ -4,7 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import pl.xkoem.tickets.models.TicketPrivateKey;
+import pl.xkoem.tickets.payment.models.TicketPrivateKey;
 
 @RestController
 public class PaymentController {

@@ -2,7 +2,7 @@ package pl.xkoem.tickets.purchase;
 
 import org.springframework.http.ResponseEntity;
 import pl.xkoem.tickets.models.TicketCode;
-import pl.xkoem.tickets.models.TicketPrivateKey;
+import pl.xkoem.tickets.payment.models.TicketPrivateKey;
 
 public interface PurchaseService {
 

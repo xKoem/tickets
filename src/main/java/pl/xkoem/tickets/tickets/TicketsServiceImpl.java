@@ -5,21 +5,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.xkoem.tickets.models.Ticket;
 import pl.xkoem.tickets.models.TicketCode;
+import pl.xkoem.tickets.tickets.repository.TicketsRepository;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
 public class TicketsServiceImpl implements TicketsService {
 
+    private final TicketsRepository ticketsRepository;
+
+    public TicketsServiceImpl(TicketsRepository ticketsRepository) {
+        this.ticketsRepository = ticketsRepository;
+    }
+
     @Override
     public ResponseEntity<List<Ticket>> getTickets() {
-        return ResponseEntity.ok(Collections.emptyList());
+        return ResponseEntity.ok(ticketsRepository.findAll());
     }
 
     @Override
     public ResponseEntity<Ticket> createTicket(Ticket ticket) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(ticket);
+        var savedTicket = ticketsRepository.saveAndFlush(ticket);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedTicket);
     }
 
     @Override
