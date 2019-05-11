@@ -13,6 +13,8 @@ public class RandomTextGeneratorFactory {
                 return new DescriptionGenerator(new WordGenerator());
             case PRICE_GENERATOR:
                 return new PriceGenerator();
+            case KEY_GENERATOR:
+                return new KeyGenerator(new WordGenerator());
             default:
                 throw new IllegalArgumentException();
 

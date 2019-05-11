@@ -18,7 +18,6 @@ public class Ticket {
     private final BigDecimal price;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ticket_id")
     private int id;
 
     private Ticket(Builder builder) {

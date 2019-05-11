@@ -16,7 +16,7 @@ public class DescriptionGenerator implements RandomTextGenerator {
         return Stream.generate(() -> (int) (Math.random() * 20))
                 .map(wordGenerator::generateWord)
                 .map(x -> x + " ")
-                .limit((int) (Math.random() * 20))
+                .limit((int) (Math.random() * 20) + 1)
                 .collect(Collectors.joining());
     }
 }

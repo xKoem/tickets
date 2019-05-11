@@ -1,6 +1,9 @@
 package pl.xkoem.tickets.models;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity(name = "ticket_types")
 public class TicketType {
@@ -8,7 +11,6 @@ public class TicketType {
     private final String name;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ticket_type_id")
     private int id;
 
     private TicketType(String name) {
