@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.xkoem.tickets.models.TicketCodeEntity;
 import pl.xkoem.tickets.models.TicketEntity;
-import pl.xkoem.tickets.tickets.repository.CityRepository;
 import pl.xkoem.tickets.tickets.repository.TicketCodeRepository;
 import pl.xkoem.tickets.tickets.repository.TicketsRepository;
 
@@ -16,12 +15,10 @@ import java.util.List;
 public class TicketsServiceImpl implements TicketsService {
 
     private final TicketsRepository ticketsRepository;
-    private final CityRepository cityRepository;
     private final TicketCodeRepository ticketCodeRepository;
 
-    public TicketsServiceImpl(TicketsRepository ticketsRepository, CityRepository cityRepository, TicketCodeRepository ticketCodeRepository) {
+    public TicketsServiceImpl(TicketsRepository ticketsRepository, TicketCodeRepository ticketCodeRepository) {
         this.ticketsRepository = ticketsRepository;
-        this.cityRepository = cityRepository;
         this.ticketCodeRepository = ticketCodeRepository;
     }
 
@@ -39,6 +36,12 @@ public class TicketsServiceImpl implements TicketsService {
     @Override
     public ResponseEntity<TicketEntity> getTicket(String id) {
         return ResponseEntity.ok(getTicketEntity(id));
+    }
+
+    @Override
+    public ResponseEntity<TicketCodeEntity> getTicketCode(String id) {
+        //TODO: should be replaced with marking tickets as bought mechanism, and should only look for available ticket codes
+        return ResponseEntity.ok(ticketCodeRepository.findFirstByTicketEntityId(Integer.valueOf(id)));
     }
 
     @Override

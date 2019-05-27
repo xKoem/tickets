@@ -11,4 +11,6 @@ public interface TicketCodeRepository extends JpaRepository<TicketCodeEntity, In
     List<TicketCodeEntity> findAll();
 
     List<TicketCodeEntity> findByTicketEntityId(Integer id);
+
+    TicketCodeEntity findFirstByTicketEntityId(Integer id);
 }

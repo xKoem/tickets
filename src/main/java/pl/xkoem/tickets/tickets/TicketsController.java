@@ -32,6 +32,11 @@ public class TicketsController {
         return ticketsService.getTicket(id);
     }
 
+    @GetMapping(value = "tickets/{id}/code")
+    public ResponseEntity<TicketCodeEntity> getTicketCode(@PathVariable("id") String id) {
+        return ticketsService.getTicketCode(id);
+    }
+
     @PostMapping(value = "tickets/code")
     public ResponseEntity<TicketCodeEntity> addTicketCode(@RequestBody TicketCodeEntity ticketCodeEntity) {
         return ticketsService.addTicketCode(ticketCodeEntity);

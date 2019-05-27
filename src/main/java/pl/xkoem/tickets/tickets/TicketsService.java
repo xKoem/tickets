@@ -19,4 +19,6 @@ public interface TicketsService {
     ResponseEntity<TicketEntity> updateTicket(String id, TicketEntity ticketEntity);
 
     ResponseEntity<TicketEntity> deleteTicket(String id);
+
+    ResponseEntity<TicketCodeEntity> getTicketCode(String id);
 }
