@@ -3,10 +3,10 @@ package pl.xkoem.tickets.database;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import pl.xkoem.tickets.models.City;
-import pl.xkoem.tickets.models.Ticket;
-import pl.xkoem.tickets.models.TicketCode;
-import pl.xkoem.tickets.models.TicketType;
+import pl.xkoem.tickets.models.CityEntity;
+import pl.xkoem.tickets.models.TicketCodeEntity;
+import pl.xkoem.tickets.models.TicketEntity;
+import pl.xkoem.tickets.models.TicketTypeEntity;
 import pl.xkoem.tickets.tickets.repository.CityRepository;
 import pl.xkoem.tickets.tickets.repository.TicketCodeRepository;
 import pl.xkoem.tickets.tickets.repository.TicketTypeRepository;
@@ -51,43 +51,43 @@ public class DatabaseServiceImpl implements DatabaseService {
     @Override
     public ResponseEntity populateDatabase() {
 
-        TicketType standardTicket = TicketType.valueOf("standard");
-        TicketType halfPriceTicket = TicketType.valueOf("half-price");
+        TicketTypeEntity standardTicket = TicketTypeEntity.valueOf("standard");
+        TicketTypeEntity halfPriceTicket = TicketTypeEntity.valueOf("half-price");
         ticketTypeRepository.saveAndFlush(standardTicket);
         ticketTypeRepository.saveAndFlush(halfPriceTicket);
-        List<TicketType> ticketTypes = Arrays.asList(standardTicket, halfPriceTicket);
+        List<TicketTypeEntity> ticketTypeEntities = Arrays.asList(standardTicket, halfPriceTicket);
 
-        City krakow = City.valueOf("Krakow");
-        City warszawa = City.valueOf("Warszawa");
-        City gdansk = City.valueOf("Gdansk");
-        List<City> cities = Arrays.asList(krakow, warszawa, gdansk);
+        CityEntity krakow = CityEntity.valueOf("Krakow");
+        CityEntity warszawa = CityEntity.valueOf("Warszawa");
+        CityEntity gdansk = CityEntity.valueOf("Gdansk");
+        List<CityEntity> cities = Arrays.asList(krakow, warszawa, gdansk);
 
         cityRepository.saveAndFlush(krakow);
         cityRepository.saveAndFlush(warszawa);
         cityRepository.saveAndFlush(gdansk);
 
-        List<Ticket> tickets = Stream.generate(() -> Ticket.newBuilder()
+        List<TicketEntity> ticketEntities = Stream.generate(() -> TicketEntity.newBuilder()
                 .setName(nameGenerator.provideText())
                 .setDescription(descriptionGenerator.provideText())
                 .setPrice(new BigDecimal(priceGenerator.provideText()))
-                .setTicketType(ticketTypes.get((int) (Math.random() * ticketTypes.size())))
-                .setCity(cities.get((int) (Math.random() * cities.size())))
+                .setTicketTypeEntity(ticketTypeEntities.get((int) (Math.random() * ticketTypeEntities.size())))
+                .setCityEntity(cities.get((int) (Math.random() * cities.size())))
                 .build())
                 .limit(30)
                 .collect(Collectors.toList());
 
-        tickets.forEach(ticketsRepository::saveAndFlush);
+        ticketEntities.forEach(ticketsRepository::saveAndFlush);
 
-        tickets.forEach(this::generateKeys);
+        ticketEntities.forEach(this::generateKeys);
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    private void generateKeys(Ticket ticket) {
+    private void generateKeys(TicketEntity ticketEntity) {
         Stream.generate(keyGenerator::provideText)
                 .limit(30)
-                .map(x -> TicketCode.newBuilder()
-                        .setTicket(ticket)
+                .map(x -> TicketCodeEntity.newBuilder()
+                        .setTicketEntity(ticketEntity)
                         .setKey(x)
                         .build())
                 .forEach(ticketCodeRepository::saveAndFlush);

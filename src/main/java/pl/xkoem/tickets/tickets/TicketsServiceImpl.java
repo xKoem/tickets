@@ -1,10 +1,13 @@
 package pl.xkoem.tickets.tickets;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import pl.xkoem.tickets.models.Ticket;
-import pl.xkoem.tickets.models.TicketCode;
+import pl.xkoem.tickets.models.TicketCodeEntity;
+import pl.xkoem.tickets.models.TicketEntity;
+import pl.xkoem.tickets.tickets.repository.CityRepository;
+import pl.xkoem.tickets.tickets.repository.TicketCodeRepository;
 import pl.xkoem.tickets.tickets.repository.TicketsRepository;
 
 import java.util.List;
@@ -13,39 +16,63 @@ import java.util.List;
 public class TicketsServiceImpl implements TicketsService {
 
     private final TicketsRepository ticketsRepository;
+    private final CityRepository cityRepository;
+    private final TicketCodeRepository ticketCodeRepository;
 
-    public TicketsServiceImpl(TicketsRepository ticketsRepository) {
+    public TicketsServiceImpl(TicketsRepository ticketsRepository, CityRepository cityRepository, TicketCodeRepository ticketCodeRepository) {
         this.ticketsRepository = ticketsRepository;
+        this.cityRepository = cityRepository;
+        this.ticketCodeRepository = ticketCodeRepository;
     }
 
     @Override
-    public ResponseEntity<List<Ticket>> getTickets() {
+    public ResponseEntity<List<TicketEntity>> getTickets() {
         return ResponseEntity.ok(ticketsRepository.findAll());
     }
 
     @Override
-    public ResponseEntity<Ticket> createTicket(Ticket ticket) {
-        var savedTicket = ticketsRepository.saveAndFlush(ticket);
+    public ResponseEntity<TicketEntity> createTicket(TicketEntity ticketEntity) {
+        var savedTicket = ticketsRepository.saveAndFlush(ticketEntity);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedTicket);
     }
 
     @Override
-    public ResponseEntity<Ticket> getTicket(String id) {
-        return ResponseEntity.ok(null);
+    public ResponseEntity<TicketEntity> getTicket(String id) {
+        return ResponseEntity.ok(getTicketEntity(id));
     }
 
     @Override
-    public ResponseEntity<TicketCode> addTicketCode(String id, TicketCode ticketCode) {
-        return null;
+    public ResponseEntity<TicketCodeEntity> addTicketCode(TicketCodeEntity ticketCodeEntity) {
+        ticketCodeRepository.saveAndFlush(ticketCodeEntity);
+        return ResponseEntity.ok(ticketCodeEntity);
     }
 
     @Override
-    public ResponseEntity<Ticket> updateTicket(String id, Ticket ticket) {
-        return null;
+    public ResponseEntity<TicketEntity> updateTicket(String id, TicketEntity newTicket) {
+        TicketEntity ticket = getTicketEntity(id);
+        BeanUtils.copyProperties(newTicket, ticket);
+        ticket.setId(Integer.valueOf(id));
+        return ResponseEntity.ok(ticketsRepository.saveAndFlush(ticket));
     }
 
     @Override
-    public ResponseEntity<Ticket> deleteTicket(String id) {
-        return null;
+    public ResponseEntity<TicketEntity> deleteTicket(String id) {
+        TicketEntity ticket = getTicketEntity(id);
+        List<TicketCodeEntity> ticketCodes = ticketCodeRepository.findByTicketEntityId(Integer.valueOf(id));
+        ticketCodes.stream()
+                .map(TicketCodeEntity::getId)
+                .forEach(ticketCodeRepository::deleteById);
+
+        ticketsRepository.deleteById(Integer.valueOf(id));
+        return ResponseEntity.ok(ticket);
+    }
+
+    private TicketEntity getTicketEntity(String id) {
+        try {
+            Integer idValue = Integer.valueOf(id);
+            return ticketsRepository.findById(idValue).orElseThrow(IdNotFoundException::new);
+        } catch (NumberFormatException e) {
+            throw new IdNotFoundException();
+        }
     }
 }

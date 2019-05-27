@@ -1,23 +1,22 @@
 package pl.xkoem.tickets.tickets;
 
 import org.springframework.http.ResponseEntity;
-import pl.xkoem.tickets.models.Ticket;
-import pl.xkoem.tickets.models.TicketCode;
+import pl.xkoem.tickets.models.TicketCodeEntity;
+import pl.xkoem.tickets.models.TicketEntity;
 
 import java.util.List;
 
 public interface TicketsService {
 
-    ResponseEntity<List<Ticket>> getTickets();
+    ResponseEntity<List<TicketEntity>> getTickets();
 
-    ResponseEntity<Ticket> createTicket(Ticket ticket);
+    ResponseEntity<TicketEntity> createTicket(TicketEntity ticketEntity);
 
-    ResponseEntity<Ticket> getTicket(String id);
+    ResponseEntity<TicketEntity> getTicket(String id);
 
-    ResponseEntity<TicketCode> addTicketCode(String id, TicketCode ticketCode);
+    ResponseEntity<TicketCodeEntity> addTicketCode(TicketCodeEntity ticketCodeEntity);
 
-    ResponseEntity<Ticket> updateTicket(String id, Ticket ticket);
+    ResponseEntity<TicketEntity> updateTicket(String id, TicketEntity ticketEntity);
 
-    ResponseEntity<Ticket> deleteTicket(String id);
-
+    ResponseEntity<TicketEntity> deleteTicket(String id);
 }
