@@ -7,23 +7,24 @@ Swagger url
 
 ## Rest endpoints:
 
-GET `/ticketEntities` - returns all ticketEntities  
-message: {type: string, cityEntity: string, seller: string} - returns filtered ticketEntities  
-POST `/ticketEntities` - create new ticketEntity (requires permissions)  
-message: Ticket object
+POST `/populate` - populates database
+
+GET `/tickets` - returns all tickets  
+POST `/tickets` - create new ticket
     
-GET `/ticketEntities/{id}` - returns ticketEntity with specified id  
-POST `/ticketEntities/{id}` - creates a new ticket_code and pair with a ticketEntity with specified id  
-PUT `/ticketEntities/{id}` - updates a ticketEntity with specified id  
-DELETE `/ticketEntities/{id}` - removes a ticketEntity with specified id  
+GET `/tickets/{id}` - returns ticket with specified id  
+PUT `/tickets/{id}` - updates a ticket with specified id  
+DELETE `/tickets/{id}` - removes a ticket with specified id  
 
-GET `/ticketEntities/{id}/buy` - returns a ticket_private_key from ticketEntity with specified id, marks ticketEntity as waiting for payment
+POST `/tickets/code` - creates a new ticket_code and pair with a ticket with specified id  
+GET `/tickets/{id}/code` - gets first ticket code for specified ticket id
 
-GET `ticketEntities/buy` returns ticket_code when payment has been transferred successfully, updates sold value to true
-message: {ticket_private_key: string}
+GET `/tickets/{id}/buy` - returns a ticket_private_key from ticketEntity with specified id, marks ticketEntity as waiting for payment  
+POST `tickets/buy` returns ticket_code when payment has been transferred successfully, updates sold value to true
+message: TicketPrivateKey 
 
-GET `/pay` - pays for ticketEntity
-message: {ticket_private_key: string}
+POST `/pay` - pays for ticketEntity
+message: TicketPrivateKey
 
 ## Database:
 

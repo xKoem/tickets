@@ -49,8 +49,11 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Override
     public ResponseEntity<TicketCodeEntity> getBoughtTicket(TicketPrivateKey ticketPrivateKey) {
         if (keysAwaitingService.isTicketPaid(ticketPrivateKey)) {
-            return ResponseEntity.ok(ticketCodeRepository
-                    .findFirstByTicketEntityId(Integer.valueOf(keysAwaitingService.getTicketId(ticketPrivateKey))));
+            TicketCodeEntity ticket = ticketCodeRepository
+                    .findFirstByTicketEntityId(Integer.valueOf(keysAwaitingService.getTicketId(ticketPrivateKey)));
+            ticketCodeRepository.delete(ticket);
+            ticketCodeRepository.flush();
+            return ResponseEntity.ok(ticket);
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
