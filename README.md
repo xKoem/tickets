@@ -27,8 +27,11 @@ message: {ticket_private_key: string}
 
 ## Database:
 
+`http://[app_url]/h2-console`
 
 ## Design patterns examples:
 1. Builder - `pl.xkoem.tickets.models.TicketEntity.Ticket.Builder`
 2. Static factory method `pl.xkoem.ticketEntities.models.City.valueOf()`
 3. Factory - `pl.xkoem.ticketEntities.utils.randomtextgenerator.RandomTextGeneratorFactory`
+4. Dependency injection - almost every service e.g. `pl.xkoem.tickets.tickets.TicketsServiceImpl`
+5. Decorator - `pl.xkoem.tickets.purchase.KeysAwaitingService`
