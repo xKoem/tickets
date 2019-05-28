@@ -1,10 +1,7 @@
 package pl.xkoem.tickets.purchase;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.xkoem.tickets.models.TicketCodeEntity;
 import pl.xkoem.tickets.payment.models.TicketPrivateKey;
 
@@ -22,7 +19,7 @@ public class PurchaseController {
         return purchaseService.requestPurchase(id);
     }
 
-    @GetMapping(value = "tickets/buy")
+    @PostMapping(value = "tickets/buy")
     public ResponseEntity<TicketCodeEntity> getBoughtTicket(@RequestBody TicketPrivateKey ticketPrivateKey) {
         return purchaseService.getBoughtTicket(ticketPrivateKey);
     }
