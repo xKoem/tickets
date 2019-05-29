@@ -2,6 +2,10 @@
 
 Rest ticketEntities app with possibility to browse, buy and manage ticketEntities.
 
+How to run me:   
+`mvn clean install`  
+`java -jar target/tickets-0.0.1-SNAPSHOT.jar`
+
 Swagger url
 `http://[app_url]/swagger-ui.html`
 
@@ -31,8 +35,10 @@ message: TicketPrivateKey
 `http://[app_url]/h2-console`
 
 ## Design patterns examples:
-1. Builder - `pl.xkoem.tickets.models.TicketEntity.Ticket.Builder`
-2. Static factory method `pl.xkoem.ticketEntities.models.City.valueOf()`
-3. Factory - `pl.xkoem.ticketEntities.utils.randomtextgenerator.RandomTextGeneratorFactory`
-4. Dependency injection - almost every service e.g. `pl.xkoem.tickets.tickets.TicketsServiceImpl`
-5. Decorator - `pl.xkoem.tickets.purchase.KeysAwaitingService`
+1. MVC - whole project, for view SwaggerUI is responsible.
+2. Builder - `pl.xkoem.tickets.models.TicketEntity.Ticket.Builder`
+3. Static factory method `pl.xkoem.ticketEntities.models.City.valueOf()`
+4. Factory - `pl.xkoem.ticketEntities.utils.randomtextgenerator.RandomTextGeneratorFactory`
+5. Dependency injection - almost every service e.g. `pl.xkoem.tickets.tickets.TicketsServiceImpl`
+6. Decorator - `pl.xkoem.tickets.purchase.KeysAwaitingService`
+7. Delegation pattern - every controller
